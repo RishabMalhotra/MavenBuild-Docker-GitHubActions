@@ -1,0 +1,36 @@
+name: CICD
+on: 
+  push:
+   branches:
+       - master
+  workflow_dispatch:
+env:
+    DH_UN: rishab0007
+    im_name: githubtest
+jobs:
+  CICDPUsH_DOckerHuB:
+    runs-on: ubuntu
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+       with:
+           java-version: '17'
+           distribution: 'temurin'
+      - name: Install docker
+        uses: docker/setup-buildx-action@v3
+      - name: build the code
+        run: mvn package
+      - name: Loginto Docker Hub
+        uses: docker/login-action@v3
+        with:
+           username: ${{env.DH_UN}}
+           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build dockerfile and push Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .    # path where dockerfile is- which is curent directory
+          push: true
+          tags: ${{env.DH_UN}}/${{env.im_name}}:latest  # name of the image
+
