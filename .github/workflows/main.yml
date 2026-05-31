@@ -1,9 +1,9 @@
 name: CICD
-on: 
-  push:
-   branches:
-       - master
-  workflow_dispatch:
+on:
+  workflow_run:
+    workflows: ["Build"]
+    types:
+      - completed
 env:
     DH_UN: rishab0007
     im_name: githubtest
