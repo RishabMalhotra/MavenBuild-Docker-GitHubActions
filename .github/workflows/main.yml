@@ -9,7 +9,7 @@ env:
     im_name: githubtest
 jobs:
   CICDPUsH_DOckerHuB:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
